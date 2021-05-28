@@ -10,7 +10,17 @@ class Ficha
 {
     public:
         Ficha(string aut, string tit, string edit, string nacion, string lengua, int num, int ident);
+        Ficha(){
+            autor = " ";
+            titulo= " ";
+            editorial= " ";
+            pais= " ";
+            idioma= " ";
+            numPaginas= 0;
+            id= 0;
+        }
         void consulCaracteristicas();
+        int getId();
     private:
         string autor;
         string titulo; 
@@ -41,6 +51,10 @@ void Ficha :: consulCaracteristicas(){
     cout << "Pais: " << pais << endl;
     cout << "Idioma: " << idioma << endl;
     cout << "Número de páginas: " << numPaginas << endl;
+}
+
+int Ficha :: getId(){
+    return id;
 }
 
 #endif
