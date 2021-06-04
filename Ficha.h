@@ -1,3 +1,11 @@
+/*
+    Erick Alfredo García Huerta
+    A01708119
+    Proyecto Administración de una biblioteca Clase Ficha
+    Esta clase define las características bibliográficas de los libros y revistas
+    se implementa por medio de composicióna la clase Libro y su clase heredada Revista.
+*/
+
 #ifndef FICHA_H
 #define FICHA_H
 
@@ -6,10 +14,13 @@
 
 using namespace std;
 
+//Declaración de la clase ficha que contiene los datos bibliográficos de los libros.
 class Ficha
 {
     public:
+        //Constructor para clase libros.
         Ficha(string aut, string tit, string edit, string nacion, string lengua, int num, int ident);
+        //Constructor por defautl para clase Revistas
         Ficha(){
             autor = " ";
             titulo= " ";
