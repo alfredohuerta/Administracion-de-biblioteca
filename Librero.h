@@ -1,3 +1,10 @@
+/*
+    Erick Alfredo García Huerta
+    A01708119
+    Proyecto Administración de una biblioteca Clase Librero
+    Esta clase crea las filas donde se almacenarán las filas y se mostrarán sus datos.
+*/
+
 #ifndef LIBRERO_H
 #define LIBRERO_H
 
@@ -16,6 +23,7 @@ class Librero
 {
     public:
         Librero(int id, string sector);
+        //Destructor de objetos
         ~Librero(){
             for (int i = 0; i < noFila; i++){
                 delete filas[i];
