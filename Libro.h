@@ -1,3 +1,11 @@
+/*
+    Erick Alfredo García Huerta
+    A01708119
+    Proyecto Administración de una biblioteca Clase Libro
+    Esta clase construye la clase libro y su clase heredada revista además de estar conectada con la clase Ficha y Fila.
+    Su función es crear los objetos que se albergarán en las filas.
+*/
+
 #ifndef LIBRO_H
 #define LIBRO_H
 
@@ -13,7 +21,9 @@ using namespace std;
 class Libro
 {
     public:
+        //Constructor para la clase Libro y contiene datos de la clase Ficha.
         Libro(string gen, string col, int edad, Ficha datos);
+        //Constructor que le heredará las características a la clase revista
         Libro(string gen, string col, int edad);
         void consulDatos();
         string getDisponible();
@@ -26,12 +36,14 @@ class Libro
         Ficha bibliografia;
 };
 
+//Asignación de datos para el constructor de los libros que se liga con la clase Ficha
 Libro :: Libro(string gen, string col, int edad, Ficha datos)
 : genero(gen), color(col), edadMinima(edad), bibliografia(datos)
 {
     disponible= "Disponible";
 }
 
+//Asignación de datos para el constuctor que heredará a Revista
 Libro :: Libro(string gen, string col, int edad)
 {
     genero= gen;
@@ -62,6 +74,7 @@ void Libro :: setPrestado(){
     cout << "\n";
 }
 
+//Clase Revista que hereda de Libro
 class Revista: public Libro
 {
     private:
@@ -74,6 +87,7 @@ class Revista: public Libro
         void datosRevista();
         void setPrestamo();
         string getDisponibilidad();
+        //Constructor que marcaqué datos se obtendrán de la clase padre
         Revista(string gen, string col, int edad, string edito, string nomb, int edici, int iden):Libro(gen, col, edad){
             editorial= edito;
             nombre= nomb;
