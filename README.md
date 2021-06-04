@@ -4,3 +4,5 @@ El presente proyecto busca representar el manejo de los recursos básico de una 
 Permite el apartado de mesas, escritorios y computadoras.
 El almacenamiento, selección, creación y destrucción de los libros está controlada por unordered_maps.
 La disponibilidad del equipo de la biblioteca está subordinada a valores booleanos.
+# Correcciones
+Se implementó Herencia en Libro.h
