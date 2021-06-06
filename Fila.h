@@ -25,8 +25,11 @@ class Fila
 {
     public:
         //Clases abstractas que funcionan con apuntadores
+        virtual void getPrestarLibros();
         virtual void llenarFila();
         virtual void mostrarDatos();
+        virtual void getPrestarRevista();
+        virtual void mostrarDatosIndv();
         Fila (int numF);
         //Destructor de los objetos en el heap.
         ~Fila(){
@@ -55,18 +58,28 @@ Fila :: Fila (int numF){
     numfichas= 0;
     numlibros= 0;
     numrevistas= 0;
+    fichas[numfichas];
+    libros[numlibros];
+    revistas[numrevistas];
 }
 
 //Llenado de la fila  con casos de prueba
 void Fila :: llenarFila(){
     fichas[numfichas]= new Ficha("Xavier Villaurrutia", "Nostalgia de la muerte", 
-        "Fondo de cultura económica", "México", "Español", 317, numfichas);
+        "Fondo de cultura económica", "México", "Español", 317);
     numfichas++;
-    libros[numlibros]= new Libro("Poesía", "Verde oliva", 15, *fichas[numlibros]);
+    libros[numlibros]= new Libro("Poesía", "Verde oliva", 15, *fichas[numlibros], numlibros);
+    numlibros++;
+    fichas[numfichas]= new Ficha("Efraín Huerta", "Poesía completa", "Fondo de cultura económica",
+        "México", "Español", 500);
+    numfichas++;
+    libros[numlibros]= new Libro("Poesía", "Blanco", 15, *fichas[numlibros], numlibros);
     numlibros++;
     revistas[numrevistas]= new Revista("Ciencias naturales", "negro", 10, 
         "National geographic", "National Geograpchic", 15, numrevistas);
     numrevistas++;
+    revistas[numrevistas]= new Revista("Ciencias naturales", "rojo", 15, 
+        "Muy Interesante Mx", "Muy interesante", 3, numrevistas);
 }
 
 void Fila :: mostrarDatos(){
@@ -76,8 +89,47 @@ void Fila :: mostrarDatos(){
     }
     cout << "\nRevistas: " << endl;
     for (int i = 0; i < numlibros; i++){
-        revistas[i]->datosRevista();
+        revistas[i]->consulDatos();
     }
+}
+
+void Fila :: mostrarDatosIndv(){
+    int no, respuesta;
+    cout << "\nSi desea encontrar un libro, INGRESE 1" << endl;
+    cout << "Si desea encontrar una revista, INGRESE 2" << endl;
+    cout << "¿Qué desea?: ";
+    cin >> respuesta;
+    switch (respuesta)
+    {
+    case 1:
+        cout << "Ingrese la ID del libro: ";
+        cin >> no;
+        cout << "\n";
+        libros[no]->consulDatos();
+        break;
+    case 2:
+        cout << "Ingrese la ID del libro: ";
+        cin >> no;
+        cout << "\n";
+        revistas[no]->consulDatos();
+        break;
+    default:
+        break;
+    }
+}
+
+void Fila :: getPrestarLibros(){
+    int libro;
+    cout << "Ingrese la ID del libro: ";
+    cin >> libro;
+    libros[libro]->setPrestado();
+}
+
+void Fila :: getPrestarRevista(){
+    int revista;
+    cout << "Ingrese la ID de la revista: ";
+    cin >> revista;
+    revistas[revista]->setPrestado();
 }
 
 #endif
