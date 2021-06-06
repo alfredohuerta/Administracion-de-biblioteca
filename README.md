@@ -6,4 +6,4 @@ El almacenamiento, selección, creación y destrucción de los libros está cont
 La disponibilidad del equipo de la biblioteca está subordinada a valores booleanos.
 # Correcciones
 Se implementó Herencia en Libro.h con la nueva clase Revista
-Se aplicó sobreescritura de métodos en Libro.h en la clase Revista en el método setPrestado.
+\nSe aplicó sobreescritura de métodos en Libro.h en la clase Revista en el método setPrestado.
