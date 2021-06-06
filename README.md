@@ -5,4 +5,5 @@ Permite el apartado de mesas, escritorios y computadoras.
 El almacenamiento, selección, creación y destrucción de los libros está controlada por unordered_maps.
 La disponibilidad del equipo de la biblioteca está subordinada a valores booleanos.
 # Correcciones
-Se implementó Herencia en Libro.h
+Se implementó Herencia en Libro.h con la nueva clase Revista
+Se aplicó sobreescritura de métodos en Libro.h en la clase Revista en el método setPrestado.
