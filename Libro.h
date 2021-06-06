@@ -22,7 +22,7 @@ class Libro
 {
     public:
         //Constructor para la clase Libro y contiene datos de la clase Ficha.
-        Libro(string gen, string col, int edad, Ficha datos);
+        Libro(string gen, string col, int edad, Ficha datos, int ident);
         //Constructor que le heredará las características a la clase revista
         Libro(string gen, string col, int edad);
         void consulDatos();
@@ -34,12 +34,14 @@ class Libro
         int edadMinima;
         string disponible;
         Ficha bibliografia;
+        int id;
 };
 
 //Asignación de datos para el constructor de los libros que se liga con la clase Ficha
-Libro :: Libro(string gen, string col, int edad, Ficha datos)
+Libro :: Libro(string gen, string col, int edad, Ficha datos, int ident)
 : genero(gen), color(col), edadMinima(edad), bibliografia(datos)
 {
+    id= ident;
     disponible= "Disponible";
 }
 
@@ -55,9 +57,11 @@ void Libro :: consulDatos(){
     cout << "Género: " << genero << endl;
     cout << "Color del libro: " << color << endl;
     cout << "Edad mínima de lectura: " << edadMinima << " años" << endl;
+    cout << "ID: " << id << endl;
     cout << "Bibliografía:  " << endl;
     bibliografia.consulCaracteristicas();
-    cout << "\nDisponibilidad: " << disponible << endl;
+    cout << "Disponibilidad: " << disponible << endl;
+    cout << "\n";
 }
 
 string Libro :: getDisponible(){
@@ -65,11 +69,10 @@ string Libro :: getDisponible(){
 }
 
 void Libro :: setPrestado(){
-    int random, ide, folio;
+    int random, folio;
     disponible = "No disponible";
     random= rand() % 200 + 100;
-    ide = bibliografia.getId();
-    folio= ide + random;
+    folio= id + random;
     cout << "Su folio de préstamo es: " << folio << endl;
     cout << "\n";
 }
@@ -84,8 +87,8 @@ class Revista: public Libro
         string estatus;
         int id;
     public: 
-        void datosRevista();
-        void setPrestamo();
+        void consulDatos();
+        void setPrestado(); //hacer igual que la clase de libro
         string getDisponibilidad();
         //Constructor que marcaqué datos se obtendrán de la clase padre
         Revista(string gen, string col, int edad, string edito, string nomb, int edici, int iden):Libro(gen, col, edad){
@@ -97,7 +100,7 @@ class Revista: public Libro
         }
 };
 
-void Revista :: datosRevista(){
+void Revista :: consulDatos(){
     cout << "ID: " << id << endl;
     cout << "Editorial: " << editorial << endl;
     cout << "Nombre: " << nombre << endl;
@@ -110,7 +113,7 @@ string Revista :: getDisponibilidad(){
     return estatus;
 }
 
-void Revista :: setPrestamo(){
+void Revista :: setPrestado(){
     int random, folio;
     estatus= "No disponible";
     random= rand() % 200 + 100;
