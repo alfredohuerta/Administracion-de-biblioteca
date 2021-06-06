@@ -23,6 +23,7 @@ class Librero
 {
     public:
         Librero(int id, string sector);
+        Librero();
         //Destructor de objetos
         ~Librero(){
             for (int i = 0; i < noFila; i++){
@@ -31,6 +32,10 @@ class Librero
         };
         virtual void llenarLibrero();
         virtual void mostrarDatosLibrero();
+        virtual void getPrestarLibros();
+        virtual void getPrestarRevistas();
+        virtual void getDatosFila();
+        void getLibreros();
 
     private:
         string seccion;
@@ -49,8 +54,13 @@ Librero :: Librero(int id, string sector)
     capacidad= 6;
 }
 
+void Librero :: getLibreros(){
+    cout << "Sección: " << seccion << endl;
+    cout << "Número de librero: " << noLibrero << endl;
+}
+
 void Librero :: llenarLibrero(){
-    filas[noFila]= new Fila(1);
+    filas[noFila]= new Fila(noFila);
     filas[noFila]->llenarFila(); 
     noFila++;
 }
@@ -60,6 +70,27 @@ void Librero :: mostrarDatosLibrero(){
     for (int i = 0; i < noFila; i++){
         filas[i]->mostrarDatos();
     }
+}
+
+void Librero :: getDatosFila(){
+    int fila;
+    cout << "Ingrese la fila: ";
+    cin >> fila;
+    filas[fila]->mostrarDatosIndv();
+}
+
+void Librero :: getPrestarLibros(){
+    int fila;
+    cout << "Ingrese el número de fila: ";
+    cin >> fila;
+    filas[fila]->getPrestarLibros();
+}
+
+void Librero :: getPrestarRevistas(){
+    int fila;
+    cout << "Ingrese el número de fila: ";
+    cin >> fila;
+    filas[fila]->getPrestarRevista();
 }
 
 #endif
