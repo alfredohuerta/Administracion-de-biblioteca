@@ -19,7 +19,7 @@ class Ficha
 {
     public:
         //Constructor para clase libros.
-        Ficha(string aut, string tit, string edit, string nacion, string lengua, int num, int ident);
+        Ficha(string aut, string tit, string edit, string nacion, string lengua, int num);
         //Constructor por defautl para clase Revistas
         Ficha(){
             autor = " ";
@@ -28,10 +28,8 @@ class Ficha
             pais= " ";
             idioma= " ";
             numPaginas= 0;
-            id= 0;
         }
         void consulCaracteristicas();
-        int getId();
     private:
         string autor;
         string titulo; 
@@ -39,10 +37,9 @@ class Ficha
         string pais; 
         string idioma;
         int numPaginas; 
-        int id;
 };
 
-Ficha :: Ficha(string aut, string tit, string edit, string nacion, string lengua, int num, int ident)
+Ficha :: Ficha(string aut, string tit, string edit, string nacion, string lengua, int num)
 {
     autor= aut;
     titulo= tit;
@@ -50,22 +47,15 @@ Ficha :: Ficha(string aut, string tit, string edit, string nacion, string lengua
     pais= nacion;
     idioma= lengua;
     numPaginas= num;
-    id= ident;
-
 }
 
 void Ficha :: consulCaracteristicas(){
-    cout << "Número de identificación: " << id << endl;
     cout << "Autor: " << autor << endl;
     cout << "Titulo: " << titulo << endl;
     cout << "Editorial: " << editorial << endl;
     cout << "Pais: " << pais << endl;
     cout << "Idioma: " << idioma << endl;
     cout << "Número de páginas: " << numPaginas << endl;
-}
-
-int Ficha :: getId(){
-    return id;
 }
 
 #endif
