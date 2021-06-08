@@ -17,7 +17,7 @@ using namespace std;
 class Bibliotecario
 {
     public:
-        Bibliotecario(string nom, int Ide, string lugar);
+        Bibliotecario(string nom, int Ide, string lugar, bool disponible);
         int getId();
         string getSitio();
         void setSitio();
@@ -33,16 +33,16 @@ class Bibliotecario
         bool disponibilidad;
 };
 
-Bibliotecario :: Bibliotecario(string nom, int ide, string lugar){
+Bibliotecario :: Bibliotecario(string nom, int ide, string lugar, bool disponible){
     nombre= nom;
     id= ide;
     sitio= lugar;
-    disponibilidad= true;
+    disponibilidad= disponible;
 }
 
 /*
 Los getters y setters que se plantean a continuación son para su imprementación en la 
-clase Recepción y el main.
+clase Recepción y en la clase Biblioteca.
 */
 
 string Bibliotecario :: getNombre(){
@@ -61,10 +61,13 @@ bool Bibliotecario :: getDisp(){
     return disponibilidad;
 }
 
+/*
+* Esta función cambia la variable sitio de los bibliotecarios además de que señala a dónde ha sido enviado
+*/
 void Bibliotecario :: setSitio(){
-    cout << "Ingrese su posición: ";
+    cout << "En donde necesita la ayuda? (Escriba el nombre de su ubicacion): ";
     cin >> sitio;
-    cout << "Su nueva posición es: " << sitio << endl;
+    cout << nombre << " se dirige a: " << sitio << endl;
 }
 
 void Bibliotecario :: getDisponibilidad(){
@@ -76,8 +79,6 @@ void Bibliotecario :: getDisponibilidad(){
 }
 
 void Bibliotecario :: setOcupado(){
-    cout << "¿A dónde se dirige? ";
-    cin >> sitio;
     disponibilidad= false;
 }
 
