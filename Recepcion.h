@@ -49,13 +49,20 @@ int Recepcion :: getPersonas(){
     return personas;
 }
 
+/*
+* Crea arreglos de objetos bibliotecarios para almacenarlos en la Recepción.
+*/
 void Recepcion :: creaBibliotecarios(){
-    bibliotecario[noBibliotecarios]= new Bibliotecario("Alberto", id, "Recepción");
+    bibliotecario[noBibliotecarios]= new Bibliotecario("Alberto", id, "Recepción", true);
     id++;
     noBibliotecarios++;
-    bibliotecario[noBibliotecarios]= new Bibliotecario("Amanda", id, "Libreros");
+    bibliotecario[noBibliotecarios]= new Bibliotecario("Amanda", id, "Libreros", false);
 }
 
+/*
+* Devuelve los datos específicos de la recepción además de que usa apuntadores y un cliclo for
+* para mostrar los datos de los bibliotecarios que se encuentran en ella.
+*/
 void Recepcion :: getDatosRecepcion(){
     cout << "Bibliotecarios disponibles: " << personas << endl;
     cout << "Datos de los bibliotecarios: " << endl;
@@ -67,15 +74,21 @@ void Recepcion :: getDatosRecepcion(){
         cout << "\n";
     }
 }
+
+/*
+* La función valida si hay bibliotecarios disponibles y en base a eso muestra aquellos que cumplen las
+* características, para después reducir el número de bibliotecarios disponibles y llamar a la función que
+*  cambia el sitio de los bibliotecarios y los manda al sitio donde el usuario los necesita.
+*/
 void Recepcion :: llamarBibliotecario(){
     if (personas >= 0){
-        cout << "Bibliotecarios disponibles: " << personas << endl;
+        cout << "Bibliotecarios disponibles: " << endl;
         for (int i = 0; i < maxBilios; i++){    
             if (bibliotecario[i]->getDisp() == true){
                 cout << bibliotecario[i]->getNombre() << endl;
-                bibliotecario[i]->getDisponibilidad();
                 bibliotecario[i]->setOcupado();
                 personas= personas-1;
+                bibliotecario[i]->setSitio();
             }else {
                 i++;
             }
@@ -85,6 +98,10 @@ void Recepcion :: llamarBibliotecario(){
     }
 }
 
+/*
+* Esta función vuelve a cambiar el estado del bibliotecario a desocupado después de validar que había un
+* bibliotecario ocupado, además de que incrementa el número de personas presentes en la recepción.
+*/
 void Recepcion :: regresoBibliotecario(){
     if (personas <= 0 ){
         for (int i = 0; i < maxBilios; i++){    
@@ -93,8 +110,6 @@ void Recepcion :: regresoBibliotecario(){
                 personas++;
             }
         }    
-    } else{
-        cout << "Error" << endl;
     }
 }
 
