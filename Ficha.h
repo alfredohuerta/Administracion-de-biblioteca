@@ -49,6 +49,10 @@ Ficha :: Ficha(string aut, string tit, string edit, string nacion, string lengua
     numPaginas= num;
 }
 
+/*
+* Muestra en pantalla las características de la ficha, aunque está ligada a un libro, 
+* por lo que es mandada a llamar en conjunto con otra clase con los datos del libro.
+*/
 void Ficha :: consulCaracteristicas(){
     cout << "Autor: " << autor << endl;
     cout << "Titulo: " << titulo << endl;
