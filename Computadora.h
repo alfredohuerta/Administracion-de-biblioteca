@@ -39,6 +39,7 @@ void Computadora :: encenderCompu(){
     cout << "La computadora se encuentra "<< encendida << endl;
 }
 
+//Cambio del valor string de la computadora a apagado
 void Computadora :: apagarCompu(){
     encendida= "apagada";
     cout << "La computadora se encuentra " << encendida << endl;
