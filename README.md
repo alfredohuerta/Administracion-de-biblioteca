@@ -8,4 +8,5 @@ No permite crear nuevos objetos de los que ya están en el código
 # Correcciones
 Se implementó herencia en Libro.h con la nueva clase Revista.\
 Se aplicó sobreescritura de métodos en Libro.h en la clase Revista en el método setPrestado.\
-Se aplicaron clases abstractas en Escritorio.h, Fila.h, Librero.h y Recepcion.h
+Se aplicaron clases abstractas en Escritorio.h, Fila.h, Librero.h y Recepcion.h\
+Se aplicó polimorfismo en Libro.h
