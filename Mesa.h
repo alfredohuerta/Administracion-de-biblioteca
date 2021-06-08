@@ -22,9 +22,11 @@ class Mesa
         void ocuparSilla();
         void desocuparSilla();
         void apartarMesa();
-        string datosMesa();
+        void datosMesa();
         void vaciarMesa();
-        void cambiarEstatus();
+        void setLimpieza();
+        string getLimpieza();
+        string getEstatus();
     private:
         int idMesa;
         string limpieza;
@@ -43,6 +45,10 @@ Mesa :: Mesa(int ident){
     estatus= "Libre";
 }
 
+/*
+* Esta función maraca como ocupada una silla de la mesa, pero para hacerlo debe validar que primero
+* haya sillas desocupadas, de lo contrario no hará nada más que lanzar un mensaje en pantalla.
+*/
 void Mesa :: ocuparSilla(){
     if (numLibres <= numSillas){
         numLibres= numLibres-1;
@@ -54,6 +60,10 @@ void Mesa :: ocuparSilla(){
     }
 }
 
+/*
+* Esta función marca como desocupada una silla de la mesa, primero debe validar que haya sillas 
+* ocupadas, de lo contrario no hace nada más que mandar un mensaje a la pantalla.
+*/
 void Mesa :: desocuparSilla(){
     if (numLibres <= numSillas){
         numOcupados= numOcupados-1;
@@ -68,7 +78,7 @@ void Mesa :: desocuparSilla(){
 //Función que marcará TODAS las sillas como ocupadas.
 void Mesa :: apartarMesa(){
     int temp;
-    cout << "Ingrese la ID de la mesa: ";
+    cout << "Para confirmar, ingrese la ID de la mesa: ";
     cin >> temp;
     if (temp == idMesa){
         numLibres= 0;
@@ -78,15 +88,20 @@ void Mesa :: apartarMesa(){
     }
 }
 
-//Visualización de los datos de la mesa por medio de un stringstream.
-string Mesa :: datosMesa(){
-    stringstream aux;
-    aux << "ID de mesa: " << idMesa << "\nEstado: " << estatus << "\nEstado de limpieza: " << limpieza << 
-    "\nSillas ocupadas: " << numOcupados << "\nSillas Libres: " << numLibres << endl;
-    return aux.str();
+//Visualización de los datos de la mesa
+void Mesa :: datosMesa(){
+    cout << "ID de mesa: " << idMesa << endl;
+    cout << "Estado: " << estatus << endl;
+    cout << "Estado de limpieza: " << limpieza << endl;
+    cout << "Sillas ocupadas: " << numOcupados << endl;
+    cout << "Sillas Libres: " << numLibres << endl;
+    cout << "\n";
 }
 
-//Para vaciar la mesa primero hay que señalar la ID de la mesa como medida de seguridad.
+/*
+* Para vaciar la mesa primero hay que señalar la ID de la mesa como medida de seguridad,
+* marcará todas las sillas como desocupadas tras validar que la ID fue ingresada correctamente.
+*/
 void Mesa :: vaciarMesa(){
     int temp;
     cout << "Ingrese la ID de la mesa: ";
@@ -99,12 +114,22 @@ void Mesa :: vaciarMesa(){
     }
 }
 
-void Mesa :: cambiarEstatus(){
-    if (numLibres >= numSillas){
-        estatus= "Libre";
-    } else {
-        estatus= "Ocupado";
-    }
+/*
+* Esta función marca la mesa como necesitada de limpieza, además de que la marca como 
+* ocupada.
+*/
+void Mesa :: setLimpieza(){
+    limpieza = "Sucio";
+    estatus = "Ocupado";
+    cout << "En breve un miembro de intendencia irá a limpiar" << endl;
+}
+
+string Mesa :: getLimpieza(){
+    return limpieza;
+}
+
+string Mesa :: getEstatus(){
+    return estatus;
 }
 
 #endif
