@@ -54,17 +54,28 @@ Librero :: Librero(int id, string sector)
     capacidad= 6;
 }
 
+/*
+* Función que devuelve los datos del librero en la  clase Biblioteca
+*/
 void Librero :: getLibreros(){
     cout << "Sección: " << seccion << endl;
     cout << "Número de librero: " << noLibrero << endl;
 }
 
+/*
+* Esta función genera objetos tipo Fila y objetos tipo Libro que se asignarán al arreglo de la fila
+* para modificar los libros que aparecen, se deben modificar el contructor en la clase fila
+*/
 void Librero :: llenarLibrero(){
     filas[noFila]= new Fila(noFila);
     filas[noFila]->llenarFila(); 
     noFila++;
 }
 
+/*
+* Esta función muestra los datos que se almacenan en el librero mediante un ciclo for
+* sólo sirve para visualizar en pantalla lo que almacena la fila.
+*/
 void Librero :: mostrarDatosLibrero(){
     cout << "Sección: " << seccion << endl;
     for (int i = 0; i < noFila; i++){
@@ -72,6 +83,10 @@ void Librero :: mostrarDatosLibrero(){
     }
 }
 
+/*
+* Esta función es un intermediario para mostrar los datos específicos de un libro.
+* Apunta a un apuntador en la clase libro.
+*/
 void Librero :: getDatosFila(){
     int fila;
     cout << "Ingrese la fila: ";
