@@ -63,7 +63,12 @@ Fila :: Fila (int numF){
     revistas[numrevistas];
 }
 
-//Llenado de la fila  con casos de prueba
+/*
+* Crea arreglos de objetos libro, revista y fichas bibliográficas para almacenarlos en las filas.
+* Se implementa a la par que la función llenarlibrero en la clase librero. Estos obketos son casos de prueba
+* por loque no pueden agregarse más sin modificar el código, para crear exitosamente un libro se debe
+* crear una ficha bibliográfica y después añadirsela al objeto libro.
+*/
 void Fila :: llenarFila(){
     fichas[numfichas]= new Ficha("Xavier Villaurrutia", "Nostalgia de la muerte", 
         "Fondo de cultura económica", "México", "Español", 317);
@@ -82,6 +87,9 @@ void Fila :: llenarFila(){
         "Muy Interesante Mx", "Muy interesante", 3, numrevistas);
 }
 
+/*
+* Muestra en pantalla los datos de los arreglos de libros y revistas mediante un ciclo for
+*/
 void Fila :: mostrarDatos(){
     cout << "Libros: " << endl;
     for (int i = 0; i < numlibros; i++){
@@ -93,6 +101,10 @@ void Fila :: mostrarDatos(){
     }
 }
 
+/*
+* MUestra los datos individuales de libros o revistas, para recibir la respuesta se debe ingresar
+* el número de identificación del libro o revista.
+*/
 void Fila :: mostrarDatosIndv(){
     int no, respuesta;
     cout << "\nSi desea encontrar un libro, INGRESE 1" << endl;
@@ -108,7 +120,7 @@ void Fila :: mostrarDatosIndv(){
         libros[no]->consulDatos();
         break;
     case 2:
-        cout << "Ingrese la ID del libro: ";
+        cout << "Ingrese la ID de la revista: ";
         cin >> no;
         cout << "\n";
         revistas[no]->consulDatos();
