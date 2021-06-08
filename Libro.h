@@ -53,6 +53,10 @@ Libro :: Libro(string gen, string col, int edad)
     edadMinima= edad;
 }
 
+/*
+* Función que muestra en pantalla las características de un libro.
+* bibliografía liga esta clase con la clase ficha para mostrar los datos que se almacenan ahí
+*/
 void Libro :: consulDatos(){
     cout << "Género: " << genero << endl;
     cout << "Color del libro: " << color << endl;
@@ -100,6 +104,10 @@ class Revista: public Libro
         }
 };
 
+/*
+* Esta función muestra los datos de una revista en pantalla y cumple la misma función 
+* que su homonima en la clase libro.
+*/
 void Revista :: consulDatos(){
     cout << "ID: " << id << endl;
     cout << "Editorial: " << editorial << endl;
@@ -113,6 +121,10 @@ string Revista :: getDisponibilidad(){
     return estatus;
 }
 
+/*
+* Esta función genera un folio aleatoriamente tras haber cambiado el estado del libro 
+* de disponible a no disponible
+*/
 void Revista :: setPrestado(){
     int random, folio;
     estatus= "No disponible";
