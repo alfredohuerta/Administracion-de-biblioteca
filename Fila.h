@@ -1,147 +1,298 @@
 /*
-    Erick Alfredo García Huerta
-    A01708119
-    Proyecto Administración de una biblioteca Clase Fila
-    Esta clase crea las filas donde se almacenarán libros y revistas para después ser almacenada en libreros.
-    Usa apuntadores para ligarse a la clase Libro.
+* Erick Alfredo García Huerta
+* A01708119
+* 
+* Proyecto Administración de Biblioteca -> clase Fila
+* 
+* Esta clase genera objetos de tipo fila que puede almacenar cantidades que oscilan entre los 1 y 10 textos por fila
+* permite obtener los datos de los textos almacenados en ellas, así como cambiar sus estados de disponibilidad, también
+* permite crear desde cero un libro o revista para su almacenamiento en la fila o la creación de un set de ejemplo
 */
 
 #ifndef FILA_H
 #define FILA_H
 
-#include <iostream>
+#include <stdio.h>
 #include <string>
+#include <iostream>
 
-#include "Libro.h"
-#include "Ficha.h"
+#include "Texto.h"
 
 using namespace std;
 
-const int maxFichas= 2;
-const int maxLibros= 2;
-const int maxRevistas= 2;
+const int maxTextos= 10;
 
 class Fila
 {
-    public:
-        //Clases abstractas que funcionan con apuntadores
-        virtual void getPrestarLibros();
-        virtual void llenarFila();
-        virtual void mostrarDatos();
-        virtual void getPrestarRevista();
-        virtual void mostrarDatosIndv();
-        Fila (int numF);
-        //Destructor de los objetos en el heap.
-        ~Fila(){
-            for (int i = 0; i < numfichas; i++){
-                delete fichas[i];
-            }
-            for (int i = 0; i < numlibros; i++){
-                delete libros[i];
-            }
-            for (int i = 0; i < numrevistas; i++){
-                delete revistas[i];
-            }
-        };
     private:
+        Texto *textos[maxTextos];
         int numFila;
-        int numfichas;
-        int numlibros;
-        int numrevistas;
-        Ficha *fichas[maxFichas];
-        Libro *libros[maxLibros];
-        Revista *revistas[maxRevistas];
+        int numTextos;
+    public:
+        Fila();
+        Fila(int filaID);
+        ~Fila(){
+            for (int i= 0; i<maxTextos ; i++){
+                delete textos[i];
+            }
+        }
+        void crearEjemplos();
+        void getDatos();
+        void getLibros();
+        void getRevistas();
+        void getDisponibles();
+        void getPrestados();
+        void setPrestados();
+        void crearLibros();
 };
 
-Fila :: Fila (int numF){
-    numFila= numF;
-    numfichas= 0;
-    numlibros= 0;
-    numrevistas= 0;
-    fichas[numfichas];
-    libros[numlibros];
-    revistas[numrevistas];
-}
+Fila :: Fila(){
+    numFila= 0;
+    numTextos= 0;
+};
+
+Fila :: Fila(int filaID){
+    numFila= filaID;
+    numTextos= 0;
+};
 
 /*
-* Crea arreglos de objetos libro, revista y fichas bibliográficas para almacenarlos en las filas.
-* Se implementa a la par que la función llenarlibrero en la clase librero. Estos obketos son casos de prueba
-* por loque no pueden agregarse más sin modificar el código, para crear exitosamente un libro se debe
-* crear una ficha bibliográfica y después añadirsela al objeto libro.
+* Esta función crea una par de objetos revista y libro como caso de prueba, no pueden ser
+* modificados y su única función es permitir corroborar que el programa funcione correctamente.
+* @param:
+* @return: Libro, Ficha, Revista.
 */
-void Fila :: llenarFila(){
-    fichas[numfichas]= new Ficha("Xavier Villaurrutia", "Nostalgia de la muerte", 
-        "Fondo de cultura económica", "México", "Español", 317);
-    numfichas++;
-    libros[numlibros]= new Libro("Poesía", "Verde oliva", 15, *fichas[numlibros], numlibros);
-    numlibros++;
-    fichas[numfichas]= new Ficha("Efraín Huerta", "Poesía completa", "Fondo de cultura económica",
-        "México", "Español", 500);
-    numfichas++;
-    libros[numlibros]= new Libro("Poesía", "Blanco", 15, *fichas[numlibros], numlibros);
-    numlibros++;
-    revistas[numrevistas]= new Revista("Ciencias naturales", "negro", 10, 
-        "National geographic", "National Geograpchic", 15, numrevistas);
-    numrevistas++;
-    revistas[numrevistas]= new Revista("Ciencias naturales", "rojo", 15, 
-        "Muy Interesante Mx", "Muy interesante", 3, numrevistas);
+void Fila :: crearEjemplos(){
+
+    textos[numTextos]= new Libro("Poesia", 15, "verde oliva", "disponible", numTextos, "libro", 
+        Ficha("Xavier Villaurrutia", "Nostalgia de la muerte", "Fondo de Cultura Econímica", 300, "mexico", "espanol"));
+    numTextos++;
+
+    textos[numTextos]= new Revista("Ciencias", 15, "amarillo", "disponible", numTextos, 
+        "revista", "NatGeo", "National Geographic", 15);
+    numTextos++;
+
+    textos[numTextos]= new Libro("Mitologia", 10, "beige", "prestado", numTextos, "libro", 
+    Ficha("Homero", "La Hiliada", "Porrua", 120, "grecia", "español"));
+    numTextos++;
+
+    textos[numTextos]= new Revista("Ciencias", 10, "rojo", "prestado", numTextos, "revista", 
+        "Muy Interesante mx", "Muy Interesante Kids", 10);
+    numTextos++;
 }
 
-/*
-* Muestra en pantalla los datos de los arreglos de libros y revistas mediante un ciclo for
-*/
-void Fila :: mostrarDatos(){
-    cout << "Libros: " << endl;
-    for (int i = 0; i < numlibros; i++){
-        libros[i]->consulDatos();
-    }
-    cout << "\nRevistas: " << endl;
-    for (int i = 0; i < numlibros; i++){
-        revistas[i]->consulDatos();
+void Fila :: getDatos(){
+    cout << "Fila #" << numFila << endl;
+    cout << "Textos almacenados: \n" << endl;
+    for(int i= 0; i<numTextos; i++){
+        textos[i]->getDatos();
     }
 }
 
+void Fila :: getLibros(){
+    cout << "\nLibros en la coleccion: " << endl;
+    for (int i=0; i<numTextos; i++){
+        if(textos[i]->getTipo() == "libro"){
+            textos[i]->getDatos();
+            cout << "\n";
+        }
+    }
+}
+
+void Fila :: getRevistas(){
+    cout << "\nRevistas en la coleccion: " << endl;
+    for (int i=0; i<numTextos; i++){
+        if(textos[i]->getTipo() == "revista"){
+            textos[i]->getDatos();
+            cout << "\n";
+        }
+    }
+}
+
+void Fila :: getDisponibles(){
+    cout << "\nArtículos disponibles: " << endl;
+    for (int i=0; i<numTextos; i++){
+        if(textos[i]->getDisponible() == "disponible"){
+            textos[i]->getDatos();
+            cout << "\n";
+        }else {
+            cout << "\n";
+        }
+    }
+}
+
+void Fila :: getPrestados(){
+    cout << "\nArtículos prestados: " << endl;
+    for (int i=0; i<numTextos; i++){
+        if(textos[i]->getDisponible() == "prestado"){
+            textos[i]->getDatos();
+            cout << "\n";
+        }
+    }
+}
+
+void Fila :: setPrestados(){
+    int iDPrestado;
+    cout << "Ingrese la ID del articulo que quiere pedir prestado: ";
+    cin >> iDPrestado;
+    cout << "funciona" << endl;
+    textos[iDPrestado]->setPrestado();
+}
+
 /*
-* MUestra los datos individuales de libros o revistas, para recibir la respuesta se debe ingresar
-* el número de identificación del libro o revista.
+* creaLibros() recibe datos para crear objetos Libros o revistas dependiendo de las necesidades del usuario, está 
+* dominado por un ciclo while que termina cuando el usuario decide dejar de registrar textos o alcanza el límite 
+* estipulado en el contador.
+* @param: 
+* @return: libros y revistas.
 */
-void Fila :: mostrarDatosIndv(){
-    int no, respuesta;
-    cout << "\nSi desea encontrar un libro, INGRESE 1" << endl;
-    cout << "Si desea encontrar una revista, INGRESE 2" << endl;
-    cout << "¿Qué desea?: ";
-    cin >> respuesta;
-    switch (respuesta)
+void Fila :: crearLibros(){
+    int respuesta, continuar;
+    bool flag= true;
+
+
+    while (flag)
     {
-    case 1:
-        cout << "Ingrese la ID del libro: ";
-        cin >> no;
-        cout << "\n";
-        libros[no]->consulDatos();
-        break;
-    case 2:
-        cout << "Ingrese la ID de la revista: ";
-        cin >> no;
-        cout << "\n";
-        revistas[no]->consulDatos();
-        break;
-    default:
-        break;
+        const char *str0= "Bienvenido al menu de registro de libros, por favor seleccione una de las siguientes opciones\n"
+                        "ADVERTENCIA! Solo puede crear hasta un maximo de 10 textos por fila, el menu se cerrara al \n"
+                        "llegar al limite\n"
+                        "1. Registrar un libro.\n"
+                        "2. Registrar una revista.\n";
+        puts(str0);
+        cout << "Que desea hacer?: ";
+        cin >> respuesta;
+
+        switch (respuesta)
+        {
+        case 1: //constructor de libros.
+            {
+            string generoL, colorL, disponiblilidadL, tipoL, autorL, nombreObraL, editoria_L, paisL, idiomaL;
+            int edadL, numPaginasL;
+
+            disponiblilidadL= "disponible";
+            tipoL= "libro";
+
+            cout << "\nIngrese los datos que se le piden: " << endl;
+            cout << "Genero: ";
+            cin >> generoL;
+            cout << "\n";
+
+            cout << "Edad minima recomendada (numero entero): ";
+            cin >> edadL;
+            cout << "\n";
+
+            cout << "Color: ";
+            cin >> colorL;
+            cout << "\n";
+
+            cout << "Autor: ";
+            cin >> autorL;
+            cout << "\n";
+
+            cout << "Nombre de la obra: ";
+            cin >> nombreObraL;
+            cout << "\n";
+
+            cout << "Editorial: ";
+            cin >> editoria_L;
+            cout << "\n";
+
+            cout << "Numero de paginas (numero entero): ";
+            cin >> numPaginasL;
+            cout << "\n";
+
+            cout << "Pais de origen: ";
+            cin >> paisL;
+            cout << "\n";
+
+            cout << "Idioma del libro: ";
+            cin >> idiomaL;
+            cout << "\n";
+
+            textos[numTextos]= new Libro(generoL, edadL, colorL, disponiblilidadL, numTextos, tipoL, 
+                Ficha(autorL, nombreObraL, editoria_L, numPaginasL, paisL, idiomaL));
+
+            cout << "\nLibro registrado con exito, valide sus resultados" << endl;
+            textos[numTextos]->getDatos();
+
+            cout << "Si sus datos son correctos, INGRESE 1, si se equivoco INGRESE 2 para borrar el ultimo registro: ";
+            cin >> continuar;
+
+            if(continuar == 2){
+                delete textos[numTextos];
+                cout << "Vuelva a intentarlo." << endl;
+            }else{
+                numTextos++;
+            }
+
+            }
+            break;
+        
+        case 2: //constructor de revistas.
+            {
+            string nombreR, generoR, colorR, disponiblilidadR, tipoR, editoria_R;
+            int edadR, edicionR;
+
+            disponiblilidadR= "disponible";
+            tipoR= "revista";
+
+            cout << "\nIngrese los datos que se le piden: " << endl;
+            cout << "Nombre: ";
+            cin >> nombreR;
+            cout << "\n";
+            
+            cout << "Genero: ";
+            cin >> generoR;
+            cout << "\n";
+
+            cout << "Edad minima recomendada (numero entero): ";
+            cin >> edadR;
+            cout << "\n";
+
+            cout << "Color: ";
+            cin >> colorR;
+            cout << "\n";
+
+            cout << "Editorial: ";
+            cin >> editoria_R;
+            cout << "\n";
+
+            cout << "Numero de edicion: ";
+            cin >> edicionR;
+            cout << "\n";
+
+            textos[numTextos]= new Revista(generoR,edadR, colorR, disponiblilidadR, numTextos, tipoR, editoria_R, 
+                nombreR, edicionR);
+
+            cout << "\nRevista registrada con exito, valide sus resultados" << endl;
+            textos[numTextos]->getDatos();
+
+            cout << "Si sus datos son correctos, INGRESE 1, si se equivoco INGRESE 2 para borrar el ultimo registro: ";
+            cin >> continuar;
+
+            if(continuar == 2){
+                delete textos[numTextos];
+                cout << "Vuelva a intentarlo." << endl;
+            }else{
+                numTextos++;
+            }
+
+            }
+            break;
+        default:
+            break;
+        }
+
+        cout << "Si desea detener el registro, INRESE 1. De lo contrario, INGRESE 2: ";
+        cin >> continuar;
+
+        if(continuar == 1){
+            flag= false;
+        }
+        if(numTextos == maxTextos){
+            flag= false;
+        }
     }
-}
-
-void Fila :: getPrestarLibros(){
-    int libro;
-    cout << "Ingrese la ID del libro: ";
-    cin >> libro;
-    libros[libro]->setPrestado();
-}
-
-void Fila :: getPrestarRevista(){
-    int revista;
-    cout << "Ingrese la ID de la revista: ";
-    cin >> revista;
-    revistas[revista]->setPrestado();
 }
 
 #endif
