@@ -1,12 +1,9 @@
 # TC1030 Administracion-de-biblioteca
-El presente proyecto busca representar el manejo de los recursos básico de una biblioteca, los cuales se dividen en los libreros, las mesas, escritorios y la recepción junto
-con las personas que la manejan. La profundidad en los detalles llega hasta las fichas bibliográficas de los libros, la dispondibilidad de tanto mesas como escritorios así como la necesidad de los mismo de limpiarse.
+El presente proyecto busca representar el manejo de los recursos básico de una biblioteca, siendo estos los libreros, los cuales pueden generarse, llenarse, manipularse y filtrar usando funciones tanto abstractas como "normales". Además de que el grueso del proyecto está conectado por medio de apuntadores que encadenan los getters y setters que permite, por ejemplo: pedir prestado un libro, cambiando su estatus de disponible a prestado.
 # Funcionalidad
-Permite el apartado de mesas, escritorios y computadoras. Permite visualizar los libros, revistas y sus datos, además de cambiar sus estados a apartado, también crea bibliotecarios que pueden cambiar de ubicación, pueden ser llamados y regresados a la recepción.
-La disponibilidad del equipo de la biblioteca está subordinada a valores booleanos que pueden modificarse mediante los métodos.
-No permite crear nuevos objetos de los que ya están en el código
+Permite la creación de Libreros, filas, libros y revistas, así como su visualización en pantalla. Además se pueden modificar sus atributos para pedirlos prestados. También es posible filtrar los libros y revistas de acuerdo a su tipo de objeto, su disponibilidad o falta de la misma y su ID. Tanto los libreros como las filas que los conforman son completamente personalizables al momento de su creación y para la navegación a través de ellos es necesario conocer su ID ya que se puede interactuar individualmente con ellos.
 # Correcciones
-Se implementó herencia en Libro.h con la nueva clase Revista.\
-Se aplicó sobreescritura de métodos en Libro.h en la clase Revista en el método setPrestado.\
-Se aplicaron clases abstractas en Escritorio.h, Fila.h, Librero.h y Recepcion.h\
-Se aplicó polimorfismo en Libro.h
+Se implementó herencia en Texto.h usando de clase padre a Texto que hereda a Libro y Revista.\
+Se aplicó sobreescritura de métodos en Texto.h en la clase padre Texto.\
+Se aplicaron clases abstractas en Texto.h\
+Se aplicó polimorfismo en Texto.h
