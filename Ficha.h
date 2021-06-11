@@ -1,9 +1,12 @@
 /*
-    Erick Alfredo García Huerta
-    A01708119
-    Proyecto Administración de una biblioteca Clase Ficha
-    Esta clase define las características bibliográficas de los libros y revistas
-    se implementa por medio de composicióna la clase Libro y su clase heredada Revista.
+* Erick Alfredo García Huerta
+* A01708119
+* 
+* Proyecto Administración de Biblioteca -> clase Ficha
+* 
+* Esta clase genera las fichas bibliográficas que se atarán a los libros, contienen
+* datos como el autor, el nombre de la obra, la editorial que publica la obra, el 
+* número de páginas, el país y el idioma original de la obra
 */
 
 #ifndef FICHA_H
@@ -11,55 +14,57 @@
 
 #include <iostream>
 #include <string>
+#include <stdio.h>
 
 using namespace std;
 
-//Declaración de la clase ficha que contiene los datos bibliográficos de los libros.
 class Ficha
 {
-    public:
-        //Constructor para clase libros.
-        Ficha(string aut, string tit, string edit, string nacion, string lengua, int num);
-        //Constructor por defautl para clase Revistas
-        Ficha(){
-            autor = " ";
-            titulo= " ";
-            editorial= " ";
-            pais= " ";
-            idioma= " ";
-            numPaginas= 0;
-        }
-        void consulCaracteristicas();
     private:
         string autor;
-        string titulo; 
-        string editorial; 
-        string pais; 
+        string nombreObra;
+        string editorial;
+        int numPaginas;
+        string pais;
         string idioma;
-        int numPaginas; 
+    public: 
+        Ficha();
+        Ficha(string escritor, string obra, string editora, int paginas, string nacion, string lengua);
+        void getFicha();
 };
 
-Ficha :: Ficha(string aut, string tit, string edit, string nacion, string lengua, int num)
-{
-    autor= aut;
-    titulo= tit;
-    editorial= edit;
+Ficha :: Ficha(){
+    autor= "";
+    nombreObra= "";
+    editorial= "";
+    numPaginas= 0;
+    pais= "";
+    idioma= "";
+}
+
+Ficha :: Ficha(string escritor, string obra, string editora, int paginas, string nacion, string lengua){
+    autor= escritor;
+    nombreObra= obra;
+    editorial= editora;
+    numPaginas= paginas;
     pais= nacion;
     idioma= lengua;
-    numPaginas= num;
 }
 
 /*
-* Muestra en pantalla las características de la ficha, aunque está ligada a un libro, 
-* por lo que es mandada a llamar en conjunto con otra clase con los datos del libro.
+* Esta función devuelve en pantalla los datos de la ficha bibliográfica del libro.
+* 
+* @param: 
+* @return: autor, nombreObra, editorial, numPaginas, pais, idioma.
 */
-void Ficha :: consulCaracteristicas(){
+
+void Ficha :: getFicha(){
     cout << "Autor: " << autor << endl;
-    cout << "Titulo: " << titulo << endl;
+    cout << "Nombre obra: " << nombreObra << endl;
     cout << "Editorial: " << editorial << endl;
-    cout << "Pais: " << pais << endl;
-    cout << "Idioma: " << idioma << endl;
-    cout << "Número de páginas: " << numPaginas << endl;
+    cout << "Numero de paginas: " << numPaginas << endl;
+    cout << "Pais de publicacion: " << pais << endl;
+    cout << "Idioma del libro: " << idioma << endl;
 }
 
 #endif
