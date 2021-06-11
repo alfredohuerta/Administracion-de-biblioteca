@@ -1,317 +1,234 @@
 /*
 * Erick Alfredo García Huerta
 * A01708119
-* Clase Biblioteca, en esta se almacena el grueso del programa, lleva a cabo la creación de la biblioteca
-* y presenta el menú del usuario.
+* 
+* Proyecto Administración de Biblioteca -> clase Biblioteca
+* 
+* Es la clase principal del proyecto, lleva a cabo dos funciones básicas pero clave para el funcionamiento del sistema
+* de administración. El primero es la construcción de los elementos de la biblioteca y el segundo es la visualización 
+* de la interfaz del usuario, la cual será la que permita a los usuarios navegar por el sistema y conectar con las otras 
+* funciones del programa.
 */
 
 #ifndef BIBLIOTECA_H
 #define BIBLIOTECA_H
 
-#include <iostream>
-#include <string>
 #include <stdio.h>
+#include <string>
+#include <iostream>
 
-#include "Ficha.h"
-#include "Libro.h"
+#include "Texto.h"
 #include "Fila.h"
 #include "Librero.h"
-#include "Mesa.h"
-#include "Computadora.h"
-#include "Escritorio.h"
-#include "Bibliotecario.h"
-#include "Recepcion.h"
 
 using namespace std;
 
-const int maxLibreros= 1, maxMesas= 1, maxEscritorios= 2;
+const int maxLibreros= 100;
 
 class Biblioteca
 {
     private:
-        int num= 0, noLibrero= 0, noMesa= 0, noEscritorio= 0;
-        string nombre;
         Librero *libreros[maxLibreros];
-        Mesa *mesas[maxMesas];
-        Escritorio *escritorios[maxEscritorios];
-        Recepcion central;
+        int numLibreros;
+        string nombreBiblioteca;
     public:
-        Biblioteca(string nom);
-        void crearBiblioteca();
-        void menuBiblioteca();
-        ~Biblioteca(){ //Destructor de los objetos en el heap.
-            for (int i = 0; i < maxLibreros; i++){
+        Biblioteca();
+        Biblioteca(string nombre);
+        ~Biblioteca(){
+            for(int i= 0; i<maxLibreros; i++){
                 delete libreros[i];
             }
-            for (int i = 0; i < maxMesas; i++){
-                delete mesas[i];
-            }
-            for (int i = 0; i < maxEscritorios; i++){
-                delete escritorios[i];
-            }
         };
+        void crearBiblioteca();
+        void menuUsuario();
 };
 
-Biblioteca :: Biblioteca(string nom){
-    nombre= nom;
+Biblioteca :: Biblioteca(){
+    numLibreros= 0;
+    nombreBiblioteca= "";
+}
+
+Biblioteca :: Biblioteca(string nombre){
+    numLibreros= 0;
+    nombreBiblioteca= nombre;
 }
 
 /*
-* Función que almacena la creacion de los arreglos de objetos además de que inicializa algunas 
-*  de las características de los mismos.
+* crearBiblioteca() genera casos de prueba que sólo sirven de ejemplo para el usuario del funcionamiento de la biblioteca
+* se generará un librero con dos filas y cuatro libros en cada uno.
+* Sin embargo, el usuario también puede escoger comenzar a construir la biblioteca antes de iniciar el menú, el número 
+* de objetos puede incrementarse más tarde en el menú.
+*
+* @param:
+* @return: Libreros[]
 */
 void Biblioteca :: crearBiblioteca(){
-    libreros[num]= new Librero (num, "Poesía");
-    libreros[num]->llenarLibrero();
-
-    mesas[noMesa]= new Mesa (noMesa);
-
-    escritorios[noEscritorio]= new Escritorio (noEscritorio, true);
-    escritorios[noEscritorio]->asignarCompu();
-    noEscritorio++;
-    escritorios[noEscritorio]= new Escritorio (noEscritorio, false);
-
-    central.creaBibliotecarios();
-}
-
-/*
-* Esta función es la interfáz que verá el usuario, contiene switches que se activarán
-* dependiendo de las preferencias del usuario y llevarán a cabo las acciones con otras clases y objetos.
-* Esta función no crea nada, sólamente sirve para llamar a los apuntadores y presentar en pantalla
-* la información que necesite el usuario dependiendo de qué ingrese en la variable respuesta.
-* El programa finaliza una vez el usario ha terminado de responder a los switches o ingresa un valor inválido.
-*/
-void Biblioteca :: menuBiblioteca(){
-    int respuesta, id;
-
-    const char *str0= "Bienvenido al servicio de administracion de la biblioteca \n"
-                        "Si desea recibir informacion sobre nuestra oferta en libros, INGRESE 1\n"
-                        "Si desea recibir informacion sobre nuestros espacios de estudio, INGRESE 2\n"
-                        "Si desea ir a nuestros escritorios, INGRESE 3\n"
-                        "Si desea hablar con uno de nuestros bibliotecarios, INGRESE 4\n";
+    int respuesta;
+    const char *str0= "Bienvenido al sistema de construcción de la biblioteca, por favor escoja una de las siguientes opciones\n"
+                        "1. Iniciar la construccion automatica.\n"
+                        "2. Comenzar a construir manualmente.\n"
+                        "AVISO! Independientemente de su respuesta, puede expandir la biblioteca de forma manual en el \n"
+                        "menu de usuario que se iniciara automaticamente tras finalizar el proceso de construccion.";
     puts(str0);
-    cout << "Que desea hacer?: ";
-
+    cout << "Escoja su opcion: ";
     cin >> respuesta;
-    cout <<"\n";
+    cout << "\n";
 
     switch (respuesta)
     {
-    case 1: //libreros, libros, revistas, fichas bibliográficas.
-        {
-        const char *str1= "\nBienvenido a los libreros \n"
-                            "Libreros disponibles: \n";
-
-        puts(str1);
-        for (int i= 0; i<maxLibreros; i++){
-            libreros[i]->getLibreros();
-        }
-        cout << "\nIngrese el librero al que quiere acceder: ";
-        cin >> noLibrero;
-        cout <<"\n";
-        
-        const char *str2= "\nSi desea pedir prestado un libro, INGRESE 1\n"
-                            "Si desea pedir prestado una revista, INGRESE 2\n"
-                            "Si desea ver de nuevo los datos del librero, INGRESE 3\n"
-                            "Si desea buscar los datos de un libro o revista, INGRESE 4\n";
-        puts(str2);
-        cout << "¿Qué desea hacer?: ";
-
-        cin >> respuesta;
-        cout <<"\n";
-
-        switch (respuesta)
-        {
-        case 1:
-            libreros[noLibrero]->getPrestarLibros();
-            break;
-        case 2:
-            libreros[noLibrero]->getPrestarRevistas();
-            break;     
-        case 3:
-            libreros[noLibrero]->mostrarDatosLibrero();
-            break;  
-        case 4:
-            libreros[noLibrero]->getDatosFila();
-            break;  
-        default:
-            cout << "Ingrese un valor valido" << endl;
-            break;
-        }
-        }
+    case 1:
+        libreros[numLibreros]= new Librero(numLibreros, "Ejemplo");
+        libreros[numLibreros]->crearEjemplos();
+        numLibreros++;
         break;
-    case 2: //mesas
+    case 2:
         {
-        int mesa;
-        const char *str3= "Bienvenido a la sección de espacios de trabajo y estudio\n"
-                            "Estas son las mesas disponibles:\n";
-        puts(str3);
-        
-        for (int i = 0; i<maxMesas; i++){
-            mesas[i]->datosMesa();
-        }
-        cout << "\n";
+            bool flag= true;
+            int continuar;
+            while(flag){
+                string tema;
+                cout << "Escriba la tematica general del librero: ";
+                cin >> tema;
 
-        const char *str4= "Si desea seleccionar una mesa, INGRESE 1\n"
-                            "Si desea volver a visualizar todas las mesas, INGRESE 2\n"
-                            "Si desea apartar una mesa, INGRESE 3\n";
-        puts(str4);
-        cout << "Que desea hacer?: ";
-    
-        cin >> respuesta;
-        cout <<"\n";
+                libreros[numLibreros]= new Librero(numLibreros, tema);
+                cout << "Construccion exitos, valide sus datos: " << endl;
+                libreros[numLibreros]->getDatos();
 
-        switch (respuesta)
-        {
-        case 1:
-            {
-            cout << "\nIngrese la ID de la mesa: " << endl;
-            cin >> mesa;
-            cout << "Datos de la mesa: " << endl;
-            mesas[mesa]->datosMesa();
+                cout << "Ingrese las especificaciones internas del librero, debe crear al menos una fila y un texto" << endl;
+                libreros[numLibreros]->crearFila();
 
-            const char *str5= "Si desea sentarse, INGRESE 1\n"
-                                "Si desea llamar al servicio de limpieza, INGRESE 2\n"
-                                "Si desea vaciar la mesa, INGRESE 3\n";
-            puts(str5);
+                cout << "Desea crear otro librero? INGRESE 1 para crear otro, INGRESE 2 para terminar: ";
+                cin >> continuar;
 
-            cout << "Que dese hacer? ";
-            cin >> respuesta;
-            cout <<"\n";
-
-            switch (respuesta)
-            {
-            case 1:
-                mesas[mesa]->ocuparSilla();
-                cout << "Desea seguir sentado? (1 para si/2 para no)";
-                cin >> respuesta;
-                if (respuesta == 1){
-                    cout << "Se quedo dormido hasta que cerro la biblioteca." << endl;
-                } else{
-                    mesas[mesa]->desocuparSilla();
-                }
-                break;
-            case 2:
-                mesa[mesas]->setLimpieza();
-                break;
-            case 3:
-                cout << "Al llamar al servicio de limpieza, todos deben abandonar la mesa" << endl;
-                mesas[mesa]->vaciarMesa();
-                break;
-            default:
-                cout << "Ingrese un valor valido" << endl;
-                break;
-            }
-            }
-            break;
-        case 2:
-            for (int i = 0; i<maxMesas; i++){
-            mesas[i]->datosMesa();
-            }
-            cout << "\n";
-            break;
-        case 3:
-            int mesa; 
-            cout << "Que mesa desea ocupar? (ingrese la ID) ";
-            cin >> mesa;
-            mesas[mesa]->apartarMesa();
-            break;
-        default:
-        cout << "Ingrese un valor valido" << endl;
-            break;
-        }
-        }
-        break;
-    case 3: //escritorios
-        {
-            int escritorio;
-
-            const char *str6 = "Bienvenido a la seccion de escritorios\n"
-                                "Estos son los escritorios disponibles:\n";
-            puts(str6);
-
-            for (int i= 0; i<maxEscritorios; i++ ){
-                escritorios[i]->datosEscritorio();
-            }
-
-            cout << "Ingrese la ID del escritorio que desea usar: ";
-            cin >> escritorio;
-            escritorios[escritorio]->ocuparEscritorio();
-            cout << "\n";
-
-            const char *str7 = "Para abandonar el escritorio, INGRESE 1\n"
-                                "ADVERTENCIA: Las siguientes funciones solo están disponibles si el escritorio cuenta con computadora\n"
-                                "Para usar la computadora del escritorio, INGRESE 2 \n"
-                                "Para solicitar la ayuda de un técnico, INGRESE 3\n";
-            puts(str7);
-
-            cout << "Que dese hacer? ";
-            cin >> respuesta;
-            cout << "\n";
-
-            switch (respuesta)
-            {
-            case 1:
-                escritorios[escritorio]->setDesocupado();
-                break;
-            case 2:
-                if (escritorios[escritorio]->getComputo() == true){
-                    escritorios[escritorio]->getDatosComputadora();
-                }else {
-                    cout << "No cuenta con computadora" << endl;
-                }
-            case 3:
-                if (escritorios[escritorio]->getComputo() == true){
-                    escritorios[escritorio]->solicitarAyuda();
+                if(continuar == 2){
+                    flag = false;
                 }else{
-                    cout << "Usted no cuenta con computadora" << endl;
+                    numLibreros++;
                 }
-            default:
-                cout << "Ingrese un valor valido" << endl;
-                break;
             }
         }
+            break;
+    default:
         break;
-    case 4:
-        {
-        const char *str8= "Bienvenido al menu de atencion al usuario\n"
-                            "A continuacion se mostraran nuestros bibliotecarios disponibles:\n";
-        puts(str8);
-        
-        central.getDatosRecepcion();
-        
-        const char *str9= "Si desea llamar a un bibliotecario, INGRESE 1\n"
-                            "Si ha terminado de hacer uso del programa, INGRESE  2\n";
-        puts(str9);
+    }
+    
+}
 
-        cout << "Que dese hacer? ";
+/*
+* menuUsuario() permite al usuario navegar por las distintas opciones de los objetos así como seguir incrementando la
+* biblioteca.
+* 
+* @param:
+* @return: libreros[], filas[], textos[]
+*/
+void Biblioteca :: menuUsuario(){
+    int respuesta;
+    bool menu= true;
+    const char *str1= "Bienvenido al menu de adminsitracion de la biblioteca.\n"
+                        "1. Navegar en los libreros.\n"
+                        "2. Crear nueva seccion de libreros.\n";
+    while (menu)
+    {
+        puts(str1);
+
+        cout << "Que desea hacer? ";
         cin >> respuesta;
-        cout << "\n";
 
-        switch (1)
+        switch (respuesta)
         {
         case 1:
-            central.llamarBibliotecario();
-            cout << "Cuando termine de hablar con el bibliotecario, INGRESE 1" << endl;
-            int servicio;
-            cin >> servicio;
-            if (servicio == 1){
-                central.regresoBibliotecario();
-                cout << "Gracias por usar el servicio de atencion." << endl;
+            {
+                int idLibrero, opcion;
+                cout << "Bienvenido a la seccion de libreros. A continuacion se le presentara nuestra oferta" << endl;
+                for (int i= 0; i<=numLibreros; i++){
+                    libreros[i]->getDatos();
+                }
+
+                cout << "Para continuar ingrese el numero de librero al que quiere acceder: ";
+                cin >> idLibrero;
+                cout << "\n";
+                const char *str2= "Seleccione una de las siguientes opciones: \n"
+                                    "1. Pedir prestado un libro o revista.\n"
+                                    "2. Mostrar todos los libros de una fila.\n"
+                                    "3. Mostrar todos las revistas de una fila.\n"
+                                    "4. Mostrar todos los textos disponibles de una fila.\n"
+                                    "5. Mostrar todos los textos prestados de una fila.\n"
+                                    "6. Volver a mostrar todos los datos del librero.\n";
+                puts(str2);
+
+                cout << "Que desea hacer?: ";
+                cin >> opcion;
+                cout << "\n";
+
+                switch (opcion)
+                {
+                case 1:
+                    libreros[idLibrero]->setPrestar();
+                    break;
+                case 2:
+                    libreros[idLibrero]->getLibrosFila();
+                    break;
+                case 3:
+                    libreros[idLibrero]->getRevistasFila();
+                    break;
+                case 4:
+                    libreros[idLibrero]->getDisponiblesFila();
+                    break;
+                case 5:
+                    libreros[idLibrero]->getPrestadosFila();
+                    break;
+                case 6: 
+                    libreros[idLibrero]->getDatos();
+                    break;
+                default:
+                    break;
+                }
+
+                int finalizar;
+                cout << "Si desea volver al menu INGRESE 1, INGRESE 2 para finalizar el programa: ";
+                cin >> finalizar;
+                if (finalizar == 2){
+                    menu= false;
+                }
             }
             break;
         case 2:
-            cout << "Gracias por hacer uso del sistema de la biblioteca" << endl;
+            {
+                bool flag= true;
+                int continuar;
+                while(flag){
+                    string tema;
+                    cout << "Escriba la tematica general del librero: ";
+                    cin >> tema;
+
+                    libreros[numLibreros]= new Librero(numLibreros, tema);
+                    cout << "Construccion exitos, valide sus datos: " << endl;
+                    libreros[numLibreros]->getDatos();
+
+                    cout << "Ingrese las especificaciones internas del librero, debe crear al menos una fila y un texto" << endl;
+                    libreros[numLibreros]->crearFila();
+
+                    cout << "Desea crear otro librero? INGRESE 1 para crear otro, INGRESE 2 para terminar: ";
+                    cin >> continuar;
+
+                    if(continuar == 2){
+                        flag = false;
+                    }else{
+                        numLibreros++;
+                    }
+                }
+
+                int finalizar;
+                cout << "Si desea volver al menu principal INGRESE 1, INGRESE 2 para finalizar el programa: ";
+                cin >> finalizar;
+                if (finalizar == 2){
+                    menu= false;
+                }
+            }
             break;
         default:
             break;
         }
-                            
-        }
-        break;
-    default:
-        cout << "Ingrese un valor válido" << endl;
-        break;
     }
 }
 
